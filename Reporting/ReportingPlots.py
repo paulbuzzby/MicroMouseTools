@@ -51,6 +51,10 @@ data_columns = [
     'Left Angle',
     'Right Angle',
     'Front Right',
+    'edgeLeftFast',
+    'edgeLeftSlow',
+    'edgeRightFast',
+    'edgeRightSlow',
     'Distance Count',
     'Maze Location',
     'Forward Speed count',
@@ -77,6 +81,8 @@ def dataframe_from_pasted_log(log_text: str) -> pd.DataFrame:
         values = [int(x.strip()) for x in match.group(1).split(",")]
         if len(values) == len(data_columns):
             rows.append(values)
+        else:
+            print(f"Warning: Skipping line with unexpected number of values: {line.strip()} (found {len(values)}, expected {len(data_columns)})")
 
     if not rows:
         raise ValueError("No valid 'Robot Data: [...]' rows found in pasted text.")
